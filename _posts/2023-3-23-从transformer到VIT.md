@@ -26,7 +26,7 @@ Transformer，这是一种避免递归的模型架构，而是完全依赖于注
 
 首先介绍 Transformer 的整体结构，下图是 Transformer 用于中英文翻译的整体结构：
 
-![image-20230318203631507](https://github.com/xiejingcheng/xiejingcheng.github.io/tree/main/_posts\img\image-20230318203631507.png)
+![image-20230318203631507](https://github.com/xiejingcheng/xiejingcheng.github.io/raw/main/_posts\img\image-20230318203631507.png?raw=true)
 
 和很多翻译任务的模型一样，transformer也是由编码解码模型组成。在自然语言处理的很多应用中，输入和输出都可以是不定长序列。以机器翻译为例，大多数时候，输入输出并不是像上图中一样等长。输入可以是一段不定长的英语文本序列，输出可以是一段不定长的法语文本序列，例如：
 英语输入:“They” “are” “watching” “.”
