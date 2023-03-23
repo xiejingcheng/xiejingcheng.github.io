@@ -390,7 +390,7 @@ Decoder Softmax 之前的 Z
 
 Softmax 根据输出矩阵的每一行预测下一个单词：
 
-![img](https://github.com/xiejingcheng/xiejingcheng.github.io/raw/main/_posts\img\v2-0938aa45a288b5d6bef6487efe53bd9d_1440w-1679143416785-41.webp?raw=true)
+![img](https://github.com/xiejingcheng/xiejingcheng.github.io/raw/main/_posts\img\v2-0938aa45a288b5d6bef6487efe53bd9d_1440w-1679143416785-41.webp)
 
 Decoder Softmax 预测
 
