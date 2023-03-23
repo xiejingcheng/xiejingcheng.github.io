@@ -2,10 +2,10 @@
 title: XieJingcheng
 description: An undergraduate student in XDU
 url: https://xiejingcheng.github.io
-avatar: /avatar.jpeg
+avatar: /avatar.jpg
 paginate: 5
 permalink: pretty
-cover_image: /bg.jpeg
+cover_image: /bg.jpg
 
 # Gems
 plugins:
@@ -54,9 +54,9 @@ sass:
 
 # Specify the author for blog posts
 author:
-  name: Songzi Vong
-  url: https://github.com/vszhub/
-  email: vszhub@gmail.com
+  name: Jingcheng Xie
+  url: https://github.com/xiejingcheng/
+  email: jingchengxie0131@gmail.com
 plugins:
   - jekyll-remote-theme
 
