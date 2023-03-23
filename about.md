@@ -1,8 +1,13 @@
 ---
 layout: page
-title: About
+title: About me
 ---
 
-**Not Pure Poole** is a simple, beautiful, and powerful Jekyll theme for blogs. It is built on [Poole](https://github.com/poole/poole) and [Pure](https://purecss.io/).
+# 1，自我介绍
 
-For more information about Not Pure Poole, please browse the [README](https://github.com/vszhub/not-pure-poole) file.
+我叫谢竞成，是西安电子科技大学人工智能学院智能科学与技术专业的一名2020级本科生。同时也是一名kaggle新手，正在kaggle上学习ML、DL知识。[这里](https://www.kaggle.com/xiejingcheng)是我的kaggle主页，欢迎大家同我一起学习进步。当然，如果您不介意我是新手，我会很开心和您一起参加kaggle的比赛。可以直接通过邮件联系我，也可以直接添加我的QQ好友：1364274327。
+
+在学习与kaggle之余，我也参加了一些学校的小项目，同时自己也在学习ML、DL方面的知识，我也会写一些小blog，如果您发现了一些谬误或是有什么想法请通过上面的方法直接和我交流。
+
+最后我正处在保研（专业课程排名2~3%）的关键时期，如果您有相关方面的信息，请直接联系我。
+
