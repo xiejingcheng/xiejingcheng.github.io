@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 从transformer到VIT
-tags: NLP CV Transformer VIT
+tags: NLP CV
 math: true
 date: 2023-3-23 20:56 +0800
 ---
