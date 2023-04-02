@@ -6,9 +6,9 @@ math: true
 date: 2023-3-23 20:56 +0800
 ---
 
-[TOC]
 
 
+Transformer似乎总是深度学习中绕不开的话题。
 
 # 一， Transformer
 
