@@ -6,8 +6,6 @@ math: true
 date: 2023-1-10 20:56 +0800
 ---
 
-
-
 纪念我第一个正式参加的kaggle比赛
 
 # Novozymes Enzyme Stability Prediction
@@ -218,6 +216,8 @@ class ThermoNet(th.nn.Module):
 $$
 L=(y_{ΔΔG}−\hat{y}_{ΔΔG})^2+C*(y_{ΔT}−\hat{y}_{ΔT})^2
 $$
+
+
 训练的过程没有很大的改动，只是由于引入了辅助目标，在计算损失函数时，需要将ddg和dt两者的损失stack在一起。
 
 ```python
@@ -237,7 +237,87 @@ for x, ddg, dt in tqdm(dl_val, desc='train', disable=True):
     loss = loss[~th.isnan(loss)].sum()
 ```
 
+在训练好模型以后，我测试了一下输出的性能，对于该比赛，皮尔逊系数从0.39，提升到0.49。我猜测这或许不是模型本身预测能力更强了，而是模型更加适应当前的任务了。
 
+## 3.3，体素特征的编码
+
+之后的任务就是利用已经训练好的特征提取器，对体素特征进行编码，我曾经的做法是拆解掉分类器，但最后我发现似乎有更加简单的做法：
+
+```python
+activation = {}
+def get_activation(name):
+    def hook(model, input, output):
+        activation[name] = output.detach()
+    return hook
+
+model.ddG[1].register_forward_hook(get_activation('ddG'))
+```
+
+这里的原理很简单，就是利用torch的hook机制，在每次推理的时候，截取model中的ddg子模块中第一个线性层的输出，并且将其存储于activation字典中，然后加入最终的特征编码中。
+
+至此为止，我们提取出第一段编码。
+
+## 3.4，基于Rosetta的能量分数
+
+简单来说Rosetta就是一个大分子建模的套件，而pyrossetta是它的一个python接口，由于我们不是生物学专业的，我也只对它以及能量分数有个初步的了解。
+
+```python
+
+```
+
+
+
+## 3.5，XGB回归
+
+```python
+def objective_regressor(X_train, y_train, X_val, y_val, target_value, trial):
+    
+    if ((target_value)):
+        tree_methods = ['approx', 'hist', 'exact']
+#         tree_methods = ['gpu_hist']
+        boosting_lists = ['gbtree', 'gblinear']
+        objective_list_reg = ['reg:squarederror']  # 'reg:gamma', 'reg:tweedie'
+        boosting = trial.suggest_categorical('boosting', boosting_lists),
+        tree_method = trial.suggest_categorical('tree_method', tree_methods),
+        n_estimator = trial.suggest_int('n_estimators',20, 500, 10),
+        max_depth = trial.suggest_int('max_depth', 10, 1000),
+        reg_alpha = trial.suggest_int('reg_alpha', 1,10),
+        reg_lambda = trial.suggest_int('reg_lambda', 1,10),
+        min_child_weight = trial.suggest_int('min_child_weight', 1,5),
+        gamma = trial.suggest_int('gamma', 1, 5),
+        learning_rate = trial.suggest_loguniform('learning_rate', 0.01, 0.2),
+        objective = trial.suggest_categorical('objective', objective_list_reg),
+        colsample_bytree = trial.suggest_discrete_uniform('colsample_bytree', 0.8, 1, 0.05),
+        colsample_bynode = trial.suggest_discrete_uniform('colsample_bynode', 0.8, 1, 0.05),
+        colsample_bylevel = trial.suggest_discrete_uniform('colsample_bylevel', 0.8, 1, 0.05),
+        subsample = trial.suggest_discrete_uniform('subsample', 0.7, 1, 0.05),
+        nthread = -1
+        
+        
+    xgboost_tune = xgb.XGBRegressor(
+        tree_method=tree_method[0],
+        boosting=boosting[0],
+        reg_alpha=reg_alpha[0],
+        reg_lambda=reg_lambda[0],
+        gamma=gamma[0],
+        objective=objective[0],
+        colsample_bynode=colsample_bynode[0],
+        colsample_bylevel=colsample_bylevel[0],
+        n_estimators=n_estimator[0],
+        max_depth=max_depth[0],
+        min_child_weight=min_child_weight[0],
+        learning_rate=learning_rate[0],
+        subsample=subsample[0],
+        colsample_bytree=colsample_bytree[0],
+        eval_metric='rmsle',
+        n_jobs=nthread,
+        random_state=SEED)
+    
+    xgboost_tune.fit(X_train, y_train)
+    pred_val = xgboost_tune.predict(X_val)
+    
+    return np.sqrt(mean_squared_error(y_val, pred_val))
+```
 
 
 
@@ -252,6 +332,8 @@ kaggle社区最大的魅力或许就是，前面的大佬总是乐于和他们�
 [Surface area of the amino acids in the model structure](https://www.kaggle.com/competitions/novozymes-enzyme-stability-prediction/discussion/357899)
 
 [1st place solution - Protein as a Graph](https://www.kaggle.com/competitions/novozymes-enzyme-stability-prediction/discussion/376371)
+
+[NESP: relaxed rosetta scores](https://www.kaggle.com/code/shlomoron/nesp-relaxed-rosetta-scores)
 
 下面是kaggle社区外参考的资料
 
