@@ -3,6 +3,7 @@ layout: post
 title: My first Kaggle competition ENSP
 tags: kaggle
 math: true
+toc: true
 date: 2023-1-10 20:56 +0800
 ---
 

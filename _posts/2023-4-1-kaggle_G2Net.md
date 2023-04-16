@@ -3,6 +3,7 @@ layout: post
 title: G2Net Detecting Continuous Gravitational Waves
 tags: kaggle
 math: true
+toc: true
 date: 2023-4-1 20:56 +0800
 ---
 
